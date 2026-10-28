@@ -1,0 +1,6 @@
+fastapi==0.115.12
+uvicorn[standard]==0.34.0
+requests==2.32.3
+python-multipart==0.0.20
+edge-tts==7.0.2
+python-dotenv==1.0.1
