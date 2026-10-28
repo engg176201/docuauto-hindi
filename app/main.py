@@ -34,7 +34,7 @@ def gemini_script(topic: str, minutes: int) -> dict:
     key = os.getenv("GEMINI_API_KEY", "").strip()
     if not key:
         raise RuntimeError("Gemini API key missing. Add GEMINI_API_KEY in your hosting environment.")
-    model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    model = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
     prompt = f'''Create a fact-based Hindi documentary script for topic: {topic!r}. Target length: about {minutes} minutes, roughly {minutes*115} Hindi words. Use Devanagari Hindi, a strong but not misleading opening, clear narration, scene-by-scene visual search cues, and a thoughtful ending. Do not invent facts, statistics, quotes, or sources. If a fact is uncertain, phrase it cautiously. Return ONLY valid JSON with keys: title (string), description (string), narration (string), scenes (array of objects with narration (string) and visual_query (short English search query)), sources_to_verify (array of strings). The narration must be one coherent voiceover and scenes should cover it in order. Avoid copyrighted lyrics and do not imitate a living creator.'''
     r = requests.post(url, json={"contents":[{"parts":[{"text":prompt}]}],"generationConfig":{"responseMimeType":"application/json","temperature":0.55}}, timeout=120)
